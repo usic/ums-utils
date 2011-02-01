@@ -3,6 +3,7 @@
 # author: sakib@meta.ua
 # USIC,2008
 #
+# http://wiki.usic.org.ua/wiki/UMS_utilities
 #
 # VERSION 0.2
 
