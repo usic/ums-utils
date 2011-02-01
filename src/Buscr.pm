@@ -33,6 +33,7 @@ our @EXPORT = qw(check_user
 		get_error_descr
 		get_group
 		get_user
+		get_entry
 		ldap_val
 		get_hash_params
 		get_list_params
