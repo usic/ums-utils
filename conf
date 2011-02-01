@@ -1,0 +1,10 @@
+#config for UMS
+blow your speakers!! (C)ManoWar
+[UMS]
+defaultHomedir=/home
+#
+# fuck the system
+defaultGID=888
+baseDN=dc=usic,dc=lan
+defaultLoginShell=/bin/bash
+[/UMS]
