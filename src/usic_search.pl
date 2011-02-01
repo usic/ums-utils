@@ -15,8 +15,8 @@ use  Sys::Syslog qw(:standard :macros);
 use lib qw( . /opt/usic/include/ );
 use Buscr;
 
-my $rootdn = "cn=elfy,dc=usic,dc=lan";
-my $ldap_password="Ahcaj7ee";
+my $rootdn = "";
+my $ldap_password="";
 my $ldap_server="dirs.usic.lan";
 my $ldap_port=getservbyname("ldap", "tcp") || "389";
 my $debug_level=0;
