@@ -17,7 +17,6 @@ use Buscr;
 
 my $rootdn = "";
 my $ldap_password="";
-my $ldap_server="dirs.usic.lan";
 my $ldap_port=getservbyname("ldap", "tcp") || "389";
 my $debug_level=0;
 my $result = 0;
@@ -30,6 +29,11 @@ if ( &parse_cfg_file_params($cfg_file) ){
 	syslog(LOG_ERR, "%s\n", &get_error_descr() );
 	exit &exit_code("PARSE");
 	}
+
+my $ldap_server = &get_cfg_file_params('server');
+
+# fall back to keep backward compatibility
+$ldap_server ="dirs.usic.lan" unless $ldap_server;
 
 my $ldap = new Net::LDAP( $ldap_server, port => $ldap_port, debug => $debug_level);
 $result = $ldap->bind($rootdn, password => $ldap_password);

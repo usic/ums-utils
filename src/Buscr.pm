@@ -84,7 +84,8 @@ my %cfg_file_params = (
 	defaultGID => "gidNumber",
 	defaultLoginShell => "loginShell",
 	defaultHomedir => "homeDirectory",
-	baseDN => "basedn"
+	baseDN => "basedn",
+	server => "server",
 	# [/UMS]	
 	);
 
