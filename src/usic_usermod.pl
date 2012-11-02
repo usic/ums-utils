@@ -58,8 +58,6 @@ if ($action =~ /usic_useradd/){
 		# base fields for every user entry
 		cn => $filling, 
 		sn => $filling,
-		givenName => $filling,
-		initials => $filling,
 		uid => $filling,
 		uidNumber => $filling,
 		gidNumber => $filling,
@@ -154,13 +152,10 @@ if ($action =~ /usic_useradd/){
 	$ldapFields{"homeDirectory"} = &get_cfg_file_params('defaultHomedir') . "/" . $ldapFields{"uid"};
 	$ldapFields{"uidNumber"} = &get_free_uid($ldap);
 	
-	# givenName -- name
 	# sn -- second name
-	# initials -- middlename :(
-	(	$ldapFields{"sn"},
-		$ldapFields{"givenName"},
-		$ldapFields{"initials"}
-	)	= split /\s+/, $ldapFields{ &ldap_val("name") };
+	$ldapFields{ &ldap_val("name")} =~ /^(\S+)/;
+	$ldapFields{"sn"} = $1;
+
 	if ( &add_user($ldap, $ldapFields{'uid'},\%ldapFields) ){
 		syslog(LOG_ERR, "%s\n", &get_error_descr());
 		exit &get_error_code();
