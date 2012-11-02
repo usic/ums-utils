@@ -51,6 +51,7 @@ if ($action =~ /usic_useradd/){
 	# $base_value -- LDAP field value
 	my ($face_key, $base_key,$base_value);
 	my %given_params = &get_hash_params();
+	#FIXME: this filling sucks. Do smth with it
 	my %ldapFields = (
 		# ALL object classes
 		# person posixAccount inetOrgPerson student teacher worker readerCardUser studentCardUser voipUser
@@ -63,7 +64,9 @@ if ($action =~ /usic_useradd/){
 		gidNumber => $filling,
 		loginShell => $filling,
 		homeDirectory => $filling,
-		userPassword => $filling
+		userPassword => $filling,
+		mail => $filling,
+		telephoneNumber => $filling,
 		);
 	# first define object classes and ldap fields according to given params
 	while (($face_key,$base_value) = each %given_params){

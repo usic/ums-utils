@@ -246,7 +246,9 @@ sub ldap_val {
 		department => "department",
 		entry_year => "yearOfEntry",
 		loginShell => 'loginShell',
-		home => 'homeDirectory'
+		email => 'mail',
+		phone => 'telephoneNumber',
+		photo => 'jpegPhoto',
 		);
 	return $interface_params{$key};
 	}
