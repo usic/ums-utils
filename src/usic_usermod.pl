@@ -176,10 +176,11 @@ if ($action =~ /usic_useradd/){
 		}
 
 	# make userhome with special SUID application 
-	if (system "/opt/usic/bin/usic_usersettle -m -p $userhome_top/$ldapFields{'uid'}/  -u $ldapFields{'uidNumber'} -g $ldapFields{'gidNumber'}" ){
-		syslog(LOG_ERR, "error making homedir\n");
-		$exit_code =  &exit_code("MKDIR");
-		}
+	#XXX: disabled for now, until homedir stuff sorted out
+	#if (system "/opt/usic/bin/usic_usersettle -m -p $userhome_top/$ldapFields{'uid'}/  -u $ldapFields{'uidNumber'} -g $ldapFields{'gidNumber'}" ){
+	#	syslog(LOG_ERR, "error making homedir\n");
+	#	$exit_code =  &exit_code("MKDIR");
+	#	}
 	syslog(LOG_INFO, "added entry uid=%s,dc=usic,dc=lan\n", $ldapFields{"uid"});
 	}
 
@@ -207,10 +208,11 @@ elsif ($action =~ /usic_userdel/){
 			exit &exit_code("REQUEST");
 			}
 		# remove userhome with special SUID application
-		if ( system "/opt/usic/bin/usic_usersettle -r -p $userhome_top/$uname/" ){
-			syslog(LOG_ERR, "error deleting user homedir\n");
-			$exit_code = &exit_code("RMDIR");
-			}
+		#XXX: disabled for now, until homedir stuff sorted out
+		#if ( system "/opt/usic/bin/usic_usersettle -r -p $userhome_top/$uname/" ){
+		#	syslog(LOG_ERR, "error deleting user homedir\n");
+		#	$exit_code = &exit_code("RMDIR");
+		#	}
 		syslog(LOG_INFO,"user %s deleted\n", $uname);
 		}
 	}
