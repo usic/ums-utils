@@ -36,7 +36,7 @@ my $result = 0;
 my ($action,$user) = @ARGV;;
 
 my $cfg_file =  $ENV{USIC_CONF} || "/opt/usic/etc/config";
-openlog("UMS:usic_search", "ndelay.pid", LOG_USER);
+openlog("UMS:usic_userphoto", "ndelay.pid", LOG_USER);
 
 if ( &parse_cfg_file_params($cfg_file) ){
 	syslog(LOG_ERR, "%s\n", &get_error_descr() );
@@ -50,8 +50,7 @@ $result = $ldap->bind($rootdn, password => $ldap_password);
 
 if ($result->code()){
 	syslog(LOG_ERR,"could not bind to server %s on port %d : %s\n", $ldap_server, $ldap_port, $result->error_text());
-	$result = "BIND";
-	goto EXIT;
+	exit &exit_code("BIND");
 }
 
 $result = $ldap->search(base => &get_cfg_file_params('baseDN'),
