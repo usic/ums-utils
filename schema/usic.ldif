@@ -1,0 +1,43 @@
+# LDAP schema for UKMA Student Internet Centre users
+# oksamyt, 21-08-08 17:29
+# sakib, 2012
+#
+dn: cn=usic,cn=schema,cn=config
+objectClass: olcSchemaConfig
+cn: usic
+olcAttributeTypes: ( 9.1 NAME 'yearOfEntry' DESC 'the year when the student
+  entered UKMA' EQUALITY integerMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 )
+olcAttributeTypes: ( 9.2 NAME 'profession' DESC 'the specialization of the 
+ student' EQUALITY integerMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 )
+olcAttributeTypes: ( 9.3 NAME 'faculty' DESC 'the faculty of the student' E
+ QUALITY integerMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 )
+olcAttributeTypes: ( 10.1 NAME 'department' DESC 'The department of UKMA' E
+ QUALITY integerMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 )
+olcAttributeTypes: ( 11.1 NAME 'studentCardNumber' DESC 'Student card numbe
+ r' EQUALITY integerMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 )
+olcAttributeTypes: ( 11.2 NAME 'studentCardSeries' DESC 'Series of a studen
+ t card' EQUALITY caseIgnoreMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+olcAttributeTypes: ( 11.3 NAME 'readerCardNumber' DESC 'Reader card number'
+  EQUALITY integerMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 )
+olcAttributeTypes: ( 11.4 NAME 'passportNumber' DESC 'Passport number' EQUA
+ LITY integerMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 )
+olcAttributeTypes: ( 11.5 NAME 'passportSeries' DESC 'Series of a passport'
+  EQUALITY caseIgnoreMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+olcAttributeTypes: ( 12.1 NAME 'someFakeVOIPAttribute' DESC 'no comments' E
+ QUALITY caseIgnoreMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+olcObjectClasses: ( 9.0.0 NAME 'student' DESC 'UKMA student' SUP inetOrgPer
+ son STRUCTURAL MUST ( yearOfEntry $ profession $ faculty ) )
+olcObjectClasses: ( 9.0.1 NAME 'teacher' DESC 'UKMA teacher' SUP inetOrgPer
+ son STRUCTURAL MUST profession )
+olcObjectClasses: ( 10.0.0 NAME 'worker' DESC 'UKMA worker beside teachers'
+  SUP inetOrgPerson STRUCTURAL MUST department )
+olcObjectClasses: ( 11.0.0 NAME 'studentCardUser' DESC 'A person that is id
+ entified by the student card number' SUP top AUXILIARY MUST ( studentCardNumb
+ er $ studentCardSeries ) )
+olcObjectClasses: ( 11.0.1 NAME 'readerCardUser' DESC 'A person that is ide
+ ntified by the reader card number' SUP top AUXILIARY MUST readerCardNumber )
+olcObjectClasses: ( 11.0.2 NAME 'passportUser' DESC 'A person that is ident
+ ified by the passport number' SUP top AUXILIARY MUST ( passportNumber $ passp
+ ortSeries ) )
+olcObjectClasses: ( 12.0.0 NAME 'voipUser' DESC 'A person that is identifie
+ d by the reader card number' SUP top AUXILIARY MAY someFakeVOIPAttribute )
