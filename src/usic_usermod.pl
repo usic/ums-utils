@@ -51,12 +51,14 @@ if ($action =~ /usic_useradd/){
 	# $base_value -- LDAP field value
 	my ($face_key, $base_key,$base_value);
 	my %given_params = &get_hash_params();
-	#FIXME: this filling sucks. Do smth with it
 	my %ldapFields = (
 		# ALL object classes
 		# person posixAccount inetOrgPerson student teacher worker readerCardUser studentCardUser voipUser
 		objectClass => [ qw(person posixAccount inetOrgPerson)],
-		# base fields for every user entry
+	);
+	# attrMap used to track attributes allowed in current class
+	# start attrMap with attrs eligible in every class
+	my %attrMap = (
 		cn => $filling, 
 		sn => $filling,
 		uid => $filling,
@@ -117,7 +119,12 @@ if ($action =~ /usic_useradd/){
 			# if bachelor
 			if ($base_value == 0 || $base_value == 1 || $base_value == 2){
 				push @{$ldapFields{'objectClass'}},'student';
-				@ldapFields{&ldap_val('entry_year'), &ldap_val('profession'), &ldap_val($face_key)} = (($filling)x2, $base_value);
+				$ldapFields{&ldap_val($face_key)} = $base_value;
+				# 'student' class assumes there're gonna be entry_year & profession provided as well
+				@attrMap{&ldap_val('entry_year'), &ldap_val('profession')} = (($filling)x2);
+				unless ( defined $given_params{'entry_year'} && defined $given_params{'profession'}) {
+					syslog(LOG_WARNING, "entry_year or profession not given, but mandatory for student class");
+					}
 				}
 			# if teacher
 			elsif ($base_value == 3){
@@ -140,7 +147,7 @@ if ($action =~ /usic_useradd/){
 		}
 	# now put values of given base_value to %ldapFields
 	while (($face_key,$base_value) = each %given_params){
-		unless (defined $ldapFields{&ldap_val($face_key)}) {
+		unless (defined $attrMap{&ldap_val($face_key)}) {
 			syslog(LOG_ERR, "error parsing parameter %s : it may not be defined for assumed object class\n", $face_key);
 			exit &exit_code("PARSE");
 			}
