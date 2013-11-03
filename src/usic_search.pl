@@ -64,8 +64,8 @@ while ( ($arg, $pattern) = each %args){
 }
 
 $request .= ")";
-
-@match = &get_entry($ldap, $request, 'uid');
+my @attrs = qw(uid);
+@match = &get_entry($ldap, $request, \@attrs);
 if (@match){
 	foreach (@match){
 		print $_->{'uid'}, "\n";

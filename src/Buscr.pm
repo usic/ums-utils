@@ -394,7 +394,8 @@ sub get_entry {
 sub search {
 	my ($ldap, $filter) = @_;
 	my @result;
-	my @ents = &get_entry($ldap,$filter,'dn' );
+	my @attrs = qw(dn);
+	my @ents = &get_entry($ldap, $filter, \@attrs);
 	foreach (@ents){
 		push @result,$_->{'dn'};
 		}
